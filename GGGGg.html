@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollar Buy Platform</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:#fff;
+}
+.container{max-width:1150px;margin:auto;padding:25px}
+.header{text-align:center;margin-bottom:35px}
+.header h1{font-size:34px;margin-bottom:8px}
+.rate{
+background:#00e676;
+padding:8px 20px;
+border-radius:30px;
+display:inline-block;
+font-weight:700;
+}
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:22px;
+}
+.card{
+background:rgba(255,255,255,.12);
+padding:25px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.4);
+transition:.3s;
+}
+.card:hover{transform:translateY(-6px)}
+.card h2{font-size:28px}
+.card p{margin:10px 0;font-size:18px}
+.card button{
+background:#ff9800;
+border:none;
+padding:12px 26px;
+border-radius:30px;
+font-weight:700;
+cursor:pointer;
+}
+.card button:hover{background:#ffc107}
+
+.payment{
+display:none;
+margin-top:45px;
+background:rgba(0,0,0,.45);
+padding:30px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(0,0,0,.5);
+}
+.section-title{
+font-size:22px;
+margin-bottom:15px;
+border-left:5px solid #00e676;
+padding-left:10px;
+}
+.amount-box{
+background:#263238;
+padding:18px;
+border-radius:15px;
+margin-bottom:20px;
+}
+.pay-box{
+background:rgba(255,255,255,.08);
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+}
+.copy-btn{
+background:#03a9f4;
+border:none;
+padding:6px 16px;
+border-radius:20px;
+cursor:pointer;
+margin-top:6px;
+}
+input{
+width:100%;
+padding:14px;
+border-radius:10px;
+border:none;
+margin-top:10px;
+font-size:15px;
+}
+.submit-btn{
+width:100%;
+background:#00e676;
+padding:15px;
+border:none;
+border-radius:35px;
+font-size:19px;
+font-weight:800;
+cursor:pointer;
+margin-top:18px;
+}
+#confirmBox{
+display:none;
+margin-top:25px;
+background:#1b5e20;
+padding:25px;
+border-radius:18px;
+text-align:center;
+}
+.whatsapp{
+background:#25D366;
+color:#fff;
+padding:12px 28px;
+border-radius:35px;
+text-decoration:none;
+font-weight:700;
+display:inline-block;
+margin-top:12px;
+}
+.footer{
+text-align:center;
+margin-top:45px;
+opacity:.7;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="header">
+<h1>💲 Dollar Buy Exchange</h1>
+<div class="rate">1 USD = 114 TK</div>
+<p style="margin-top:10px">মিনিমাম ৫ ডলার | সর্বোচ্চ ৫০ ডলার</p>
+</div>
+
+<div class="cards">
+<script>
+for(let i=5;i<=50;i+=5){
+document.write(`
+<div class="card">
+<h2>${i} USD</h2>
+<p>৳ ${i*114} টাকা</p>
+<button onclick="openOrder(${i})">Buy Now</button>
+</div>
+`);
+}
+</script>
+</div>
+
+<div class="payment" id="orderBox">
+
+<div class="section-title">🧾 Order Details</div>
+<div class="amount-box">
+<p>আপনি কিনছেন: <b id="usd"></b> USD</p>
+<p>পাঠাতে হবে: <b id="tk"></b> টাকা</p>
+</div>
+
+<div class="section-title">💳 Payment Method</div>
+
+<div class="pay-box">
+bKash (Personal): <b id="bkash">01831825338</b><br>
+<button class="copy-btn" onclick="copyText('bkash')">Copy</button>
+</div>
+
+<div class="pay-box">
+Nagad (Personal): <b id="nagad">01820345289</b><br>
+<button class="copy-btn" onclick="copyText('nagad')">Copy</button>
+</div>
+
+<div class="section-title">📤 Payment Proof</div>
+<label>📸 Screenshot</label>
+<input type="file" accept="image/*">
+
+<label>🔑 Transaction ID</label>
+<input type="text" placeholder="Transaction ID লিখুন">
+
+<label>🔐 Binance ID</label>
+<input type="text" id="binance">
+
+<button class="submit-btn" onclick="confirmOrder()">Confirm Order</button>
+
+<div id="confirmBox">
+<h3>✅ আপনার অর্ডারটি কনফার্ম হয়েছে</h3>
+<p>সাপোর্টের জন্য WhatsApp করুন</p>
+<a class="whatsapp" href="https://wa.me/8801831825338" target="_blank">
+📱 01831825338
+</a>
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 Dollar Buy Platform | Secure Manual Exchange
+</div>
+
+</div>
+
+<script>
+function openOrder(amount){
+document.getElementById("orderBox").style.display="block";
+document.getElementById("usd").innerText=amount;
+document.getElementById("tk").innerText=amount*114;
+window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+}
+function copyText(id){
+navigator.clipboard.writeText(document.getElementById(id).innerText);
+alert("নাম্বার কপি হয়েছে");
+}
+function confirmOrder(){
+if(document.getElementById("binance").value===""){
+alert("Binance ID লিখুন");
+return;
+}
+document.getElementById("confirmBox").style.display="block";
+}
+</script>
+
+</body>
+</html>
